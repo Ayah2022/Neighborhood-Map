@@ -84,12 +84,15 @@
 	  }
 	  .dropdown-menu>.divider  {
 		   border-top: 0px;
-		   border-bottom: 1px solid #FC892F;
+		   border-bottom: 1px solid #96D37D ;
 		  /* background-color: #FC892F !important;*/
 	  }
 	  li>a {
-		   color: #19a0d8 !important;
+		   color: #FC892F !important;
 		  
+	  }
+	  .dropdown-menu {
+		   border: 1px solid #96D37D ;
 	  }
 @media screen (min-width: 767) and (max-width: 820)  {
 /* Header */
