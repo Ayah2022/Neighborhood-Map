@@ -1,189 +1,283 @@
 $(document).ready(function() {
-      var map;
+    //////////////////////////////////////////////_____RESTAURANTS DETAILS_____/////////////////////////////////////////////////////////////////////
+    var restaurants = [
 
-      // Create a new blank array for all the listing markers.
-      var markers = [];
+            {
+                name: "Arabiata",
+                coordinates: {
+                    lat: 30.091688,
+                    lng: 31.313630
+                },
+                address: "Al Montazah, Heliopolis, Cairo Governorate"
+            }, {
+                name: "Hardees",
+                coordinates: {
+                    lat: 30.086985,
+                    lng: 31.308954
+                },
+                address: "13 El-Khalifa El-Maamoun, Mansheya El-Bakry, Heliopolis, Cairo Governorate"
+            }, {
+                name: "Majesty",
+                coordinates: {
+                    lat: 30.091799,
+                    lng: 31.313179
+                },
+                address: "El-Khalifa El-Maamoun, Mansheya El-Bakry, Heliopolis, Cairo Governorate"
+            }, {
+                name: "KFC",
+                coordinates: {
+                    lat: 30.087342,
+                    lng: 31.308206
+                },
+                address: "El-Khalifa El-Maamoun, Mansheya El-Bakry, Heliopolis, Cairo Governorate"
+            }, {
+                name: "Spectra Restaurant & Cafe",
+                coordinates: {
+                    lat: 30.089328,
+                    lng: 31.312715
+                },
+                address: "From El-Khalifa El-Maamoun، 9 El-Tahawy, Mansheya El-Bakry, Heliopolis, Cairo Governorate"
 
-      window.initMap = function(){
-        // Create a styles array to use with the map.
-        var styles = [
-          {
-            featureType: 'water',
-            stylers: [
-              { color: '#19a0d8' }
-            ]
-          },{
-            featureType: 'administrative',
-            elementType: 'labels.text.stroke',
-            stylers: [
-              { color: '#ffffff' },
-              { weight: 6 }
-            ]
-          },{
-            featureType: 'administrative',
-            elementType: 'labels.text.fill',
-            stylers: [
-              { color: '#e85113' }
-            ]
-          },{
-            featureType: 'road.highway',
-            elementType: 'geometry.stroke',
-            stylers: [
-              { color: '#efe9e4' },
-              { lightness: -40 }
-            ]
-          },{
-            featureType: 'transit.station',
-            stylers: [
-              { weight: 9 },
-              { hue: '#e85113' }
-            ]
-          },{
-            featureType: 'road.highway',
-            elementType: 'labels.icon',
-            stylers: [
-              { visibility: 'off' }
-            ]
-          },{
-            featureType: 'water',
-            elementType: 'labels.text.stroke',
-            stylers: [
-              { lightness: 100 }
-            ]
-          },{
-            featureType: 'water',
-            elementType: 'labels.text.fill',
-            stylers: [
-              { lightness: -100 }
-            ]
-          },{
-            featureType: 'poi',
-            elementType: 'geometry',
-            stylers: [
-              { visibility: 'on' },
-              { color: '#f0e4d3' }
-            ]
-          },{
-            featureType: 'road.highway',
-            elementType: 'geometry.fill',
-            stylers: [
-              { color: '#efe9e4' },
-              { lightness: -25 }
-            ]
-          }
-        ];
+            }, {
+                name: "Abu Haider",
+                coordinates: {
+                    lat: 30.091605,
+                    lng: 31.318721
+                },
+                address: "Ibrahim Al Lakani el korba, El-Montaza, Heliopolis, Cairo Governorate"
 
-        // Constructor creates a new map - only center and zoom are required.
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 40.7413549, lng: -73.9980244},
-          zoom: 13,
-          styles: styles,
-          mapTypeControl: false
-        });
+            }
+        ]
+        ///////////////////////////////////////////////////////////////_____MAP CREATION_____////////////////////////////////////////////////////////////
 
-        // These are the real estate listings that will be shown to the user.
-        // Normally we'd have these in a database instead.
-        var locations = [
-          {title: 'Park Ave Penthouse', location: {lat: 40.7713024, lng: -73.9632393}},
-          {title: 'Chelsea Loft', location: {lat: 40.7444883, lng: -73.9949465}},
-          {title: 'Union Square Open Floor Plan', location: {lat: 40.7347062, lng: -73.9895759}},
-          {title: 'East Village Hip Studio', location: {lat: 40.7281777, lng: -73.984377}},
-          {title: 'TriBeCa Artsy Bachelor Pad', location: {lat: 40.7195264, lng: -74.0089934}},
-          {title: 'Chinatown Homey Space', location: {lat: 40.7180628, lng: -73.9961237}}
-        ];
+    var infowindow, map;
+    var markers = [];
+    window.initMap = function() {
+            var styles = [{
+                featureType: 'water',
+                stylers: [{
+                    color: '#19a0d8'
+                }]
+            }, {
+                featureType: 'administrative',
+                elementType: 'labels.text.stroke',
+                stylers: [{
+                    color: '#ffffff'
+                }, {
+                    weight: 6
+                }]
+            }, {
+                featureType: 'administrative',
+                elementType: 'labels.text.fill',
+                stylers: [{
+                    color: '#e85113'
+                }]
+            }, {
+                featureType: 'road.highway',
+                elementType: 'geometry.stroke',
+                stylers: [{
+                    color: '#efe9e4'
+                }, {
+                    lightness: -40
+                }]
+            }, {
+                featureType: 'transit.station',
+                stylers: [{
+                    weight: 9
+                }, {
+                    hue: '#e85113'
+                }]
+            }, {
+                featureType: 'road.highway',
+                elementType: 'labels.icon',
+                stylers: [{
+                    visibility: 'off'
+                }]
+            }, {
+                featureType: 'water',
+                elementType: 'labels.text.stroke',
+                stylers: [{
+                    lightness: 100
+                }]
+            }, {
+                featureType: 'water',
+                elementType: 'labels.text.fill',
+                stylers: [{
+                    lightness: -100
+                }]
+            }, {
+                featureType: 'poi',
+                elementType: 'geometry',
+                stylers: [{
+                    visibility: 'on'
+                }, {
+                    color: '#f0e4d3'
+                }]
+            }, {
+                featureType: 'road.highway',
+                elementType: 'geometry.fill',
+                stylers: [{
+                    color: '#efe9e4'
+                }, {
+                    lightness: -25
+                }]
+            }];
+            //create map
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {
+                    lat: 30.088746,
+                    lng: 31.312691
+                },
+                zoom: 22
+            });
+            var currMarker = null;
+            var marker;
 
-        var largeInfowindow = new google.maps.InfoWindow();
+            infowindow = new google.maps.InfoWindow();
+            var largeInfowindow = new google.maps.InfoWindow();
+            // Style the markers a bit. This will be our listing marker icon.
+            var defaultIcon = makeMarkerIcon('0091ff');
 
-        // Style the markers a bit. This will be our listing marker icon.
-        var defaultIcon = makeMarkerIcon('0091ff');
+            // Create a "highlighted location" marker color for when the user
+            // mouses over the marker.
+            var highlightedIcon = makeMarkerIcon('FFFF24');
+            //Iterate over the restarants and create a marker for each one
+            for (i = 0; i < restaurants.length; i++) {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(restaurants[i].coordinates),
+                    animation: google.maps.Animation.DROP,
+                    map: map,
+                    icon: defaultIcon,
+                    name: restaurants[i].name
 
-        // Create a "highlighted location" marker color for when the user
-        // mouses over the marker.
-        var highlightedIcon = makeMarkerIcon('FFFF24');
+                });
+                //put the markers
+                markers.push(marker);
+                // Two event listeners - one for mouseover, one for mouseout,
+                // to change the colors back and forth.
+                marker.addListener('mouseover', function() {
+                    this.setIcon(highlightedIcon);
+                });
+                marker.addListener('mouseout', function() {
+                    this.setIcon(defaultIcon);
+                });
+                // Create an click listener to open the large infowindow at each marker.
+                // populates the infowindow when the marker is clicked.
+                marker.addListener('click', (function(marker) {
+                    return function() {
+                        fourSquareRequest(marker, largeInfowindow);
+                    };
+                }));
+            }
 
-        var largeInfowindow = new google.maps.InfoWindow();
-        // The following group uses the location array to create an array of markers on initialize.
-        for (var i = 0; i < locations.length; i++) {
-          // Get the position from the location array.
-          var position = locations[i].location;
-          var title = locations[i].title;
-          // Create a marker per location, and put into markers array.
-          var marker = new google.maps.Marker({
-            position: position,
-            title: title,
-            animation: google.maps.Animation.DROP,
-            icon: defaultIcon,
-            id: i
-          });
-          // Push the marker to our array of markers.
-          markers.push(marker);
-          // Create an onclick event to open the large infowindow at each marker.
-          marker.addListener('click', function() {
-            populateInfoWindow(this, largeInfowindow);
-          });
-          // Two event listeners - one for mouseover, one for mouseout,
-          // to change the colors back and forth.
-          marker.addListener('mouseover', function() {
-            this.setIcon(highlightedIcon);
-          });
-          marker.addListener('mouseout', function() {
-            this.setIcon(defaultIcon);
-          });
+
+            var bounds = new google.maps.LatLngBounds();
+            // Extend the boundaries of the map for each marker and display the marker
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+                bounds.extend(markers[i].position);
+            }
+            map.fitBounds(bounds);
+
+            //CALL THE viewmodel
+            ko.applyBindings(new ViewModel());
         }
-		showListings();
-/*
-        document.getElementById('show-listings').addEventListener('click', showListings);
-        document.getElementById('hide-listings').addEventListener('click', hideListings);
-		*/
-      }
+        //google map error handling 
+    function errorHandling() {
+        alert("Fail to load the map. Try again")
+    }
 
-      // This function populates the infowindow when the marker is clicked. We'll only allow
-      // one infowindow which will open at the marker that is clicked, and populate based
-      // on that markers position.
-      function populateInfoWindow(marker, infowindow) {
-        // Check to make sure the infowindow is not already opened on this marker.
-        if (infowindow.marker != marker) {
-          infowindow.marker = marker;
-          infowindow.setContent('<div>' + marker.title + '</div>');
-          infowindow.open(map, marker);
-          // Make sure the marker property is cleared if the infowindow is closed.
-          infowindow.addListener('closeclick', function() {
-            infowindow.marker = null;
-          });
-        }
-      }
-
-      // This function will loop through the markers array and display them all.
-      function showListings() {
-        var bounds = new google.maps.LatLngBounds();
-        // Extend the boundaries of the map for each marker and display the marker
-        for (var i = 0; i < markers.length; i++) {
-          markers[i].setMap(map);
-          bounds.extend(markers[i].position);
-        }
-        map.fitBounds(bounds);
-      }
-
-     /* // This function will loop through the listings and hide them all.
-      function hideListings() {
-        for (var i = 0; i < markers.length; i++) {
-          markers[i].setMap(null);
-        }
-      }
-*/
-      // This function takes in a COLOR, and then creates a new marker
-      // icon of that color. The icon will be 21 px wide by 34 high, have an origin
-      // of 0, 0 and be anchored at 10, 34).
-      function makeMarkerIcon(markerColor) {
+    function makeMarkerIcon(markerColor) {
         var markerImage = new google.maps.MarkerImage(
-          'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +
-          '|40|_|%E2%80%A2',
-          new google.maps.Size(21, 34),
-          new google.maps.Point(0, 0),
-          new google.maps.Point(10, 34),
-          new google.maps.Size(21,34));
+            'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor +
+            '|40|_|%E2%80%A2',
+            new google.maps.Size(21, 34),
+            new google.maps.Point(0, 0),
+            new google.maps.Point(10, 34),
+            new google.maps.Size(21, 34));
         return markerImage;
-      }
+    }
 
-	 
+    ///////////////////////////////////////////////_____VIEWMODEL_____///////////////////////////////////////////////////
+
+    var ViewModel = function() {
+        var self = this;
+        //store and update the writtenInput
+        self.writtenInput = ko.observable('');
+        //store and update markers
+        self.locations = ko.observableArray();
+        //iterates over markers and copy them in the locations observable array 
+        for (var i = 0; i < markers.length; i++) {
+            self.locations.push(markers[i]);
+        }
+        //animate the markers and open infowindow when one of the locations selected from listview
+        self.listedRestaurants = function(marker) {
+                google.maps.event.trigger(marker, 'click');
+            }
+            //function to filter  markers based on written input
+        self.filteredRestaurants = ko.computed(function() {
+            //lowercase the input and store it in filter
+            var filter = self.writtenInput().toLowerCase();
+            //check if the written input matches any of the locations in the locations array,if doesnt match all markers stay visible on map
+            if (!filter) {
+                self.locations().forEach(function(item) {
+                    /*??*/
+                    item.setVisible(true);
+                });
+                return self.locations();
+                //if the written input matches a marker in the oc arr then the input id handled by the ArrFilter method
+            } else {
+                //call the arrFilter method and pass the loc.arr as an argument
+                return ko.utils.arrayFilter(self.locations(), function(item) {
+                    /*store the matched locations lowercased in matched variable and making sure that it is greater than or equal 0*/
+                    var matched = item.name.toLowerCase().indexOf(filter) >= 0;
+                    item.setVisible(matched);
+                    console.log(matched);
+                    return matched;
+                })
+
+            }
+        }, self);
+    }
+
+
+    //////////////////////////////////////////////////_____AJAX REQUEST_____///////////////////////////////////////////////////////
+
+    var fourSquareRequest = function(marker, largeInfowindow) {
+        $.ajax({
+            url: 'https://api.foursquare.com/v2/venues/explore',
+            dataType: 'json',
+            data: {
+                client_id: "ABPY10SRGGISL4NVHQ01HY3M3S3BZP3AK2AKNUX4DMPR41YT",
+                client_secret: "1NLYD3DVGFIRZBCLXHK0G0V0EYZA1EHHOQVAOQFVEMB5VFSC",
+                v: '20180214',
+                ll: `${restaurants[i].coordinates.lat},${restaurants[i].coordinates.lng}`,
+                query: restaurants[i].name
+            },
+            success: function(data) {
+                console.log(data);
+                var rating = data.response.venue.rating;
+                var url = data.response.venue.url;
+                /*The infowindow is udpdated with the FourSquare api data and the infowindow is opened immediately afterwards*/
+                // Check to make sure the infowindow is not already opened on this marker.
+                if (infowindow.marker != marker) {
+                    infowindow.marker = marker;
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                    infowindow.setContent('<div>' + name + "; FourSquare Rating: " + rating.toString() + '</div>');
+                    infowindow.open(map, marker);
+                    // Make sure the marker property is cleared if the infowindow is closed.
+                    infowindow.addListener('closeclick', function() {
+                        infowindow.marker = null;
+                    });
+                }
+            },
+            /*Foursquare api error handling*/
+            error: function(error) {
+                alert("Error, Four Square api data could not display")
+            }
+        });
+    };
+
+
+
 });
