@@ -128,13 +128,11 @@ $(document).ready(function() {
                     lat: 30.088746,
                     lng: 31.312691
                 },
-                zoom: 22
+                zoom: 15
             });
             var currMarker = null;
             var marker;
 
-            infowindow = new google.maps.InfoWindow();
-            var largeInfowindow = new google.maps.InfoWindow();
             // Style the markers a bit. This will be our listing marker icon.
             var defaultIcon = makeMarkerIcon('0091ff');
 
@@ -148,7 +146,9 @@ $(document).ready(function() {
                     animation: google.maps.Animation.DROP,
                     map: map,
                     icon: defaultIcon,
-                    name: restaurants[i].name
+                    name: restaurants[i].name,
+					mLat: restaurants[i].coordinates.lat,
+					mLng: restaurants[i].coordinates.lng
 
                 });
                 //put the markers
@@ -161,13 +161,8 @@ $(document).ready(function() {
                 marker.addListener('mouseout', function() {
                     this.setIcon(defaultIcon);
                 });
-                // Create an click listener to open the large infowindow at each marker.
-                // populates the infowindow when the marker is clicked.
-                marker.addListener('click', (function(marker) {
-                    return function() {
-                        fourSquareRequest(marker, largeInfowindow);
-                    };
-                }));
+				
+          
             }
 
 
@@ -209,54 +204,37 @@ $(document).ready(function() {
         //iterates over markers and copy them in the locations observable array 
         for (var i = 0; i < markers.length; i++) {
             self.locations.push(markers[i]);
+			infowindow = new google.maps.InfoWindow();
+            var largeInfowindow = new google.maps.InfoWindow();
+                // Create an click listener to open the large infowindow at each marker.
+                // populates the infowindow when the marker is clicked.
+                self.clickEventHandlerFunction = function(marker){
+            if(marker.name){
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(function() {
+                    marker.setAnimation(null);
+                }, 1500);
+              
+                self.populateInfoWindow(this, largeInfowindow);
+
+            }
+        };
         }
-        //animate the markers and open infowindow when one of the locations selected from listview
-        self.listedRestaurants = function(marker) {
-                google.maps.event.trigger(marker, 'click');
-            }
-            //function to filter  markers based on written input
-        self.filteredRestaurants = ko.computed(function() {
-            //lowercase the input and store it in filter
-            var filter = self.writtenInput().toLowerCase();
-            //check if the written input matches any of the locations in the locations array,if doesnt match all markers stay visible on map
-            if (!filter) {
-                self.locations().forEach(function(item) {
-                    /*??*/
-                    item.setVisible(true);
-                });
-                return self.locations();
-                //if the written input matches a marker in the oc arr then the input id handled by the ArrFilter method
-            } else {
-                //call the arrFilter method and pass the loc.arr as an argument
-                return ko.utils.arrayFilter(self.locations(), function(item) {
-                    /*store the matched locations lowercased in matched variable and making sure that it is greater than or equal 0*/
-                    var matched = item.name.toLowerCase().indexOf(filter) >= 0;
-                    item.setVisible(matched);
-                    console.log(matched);
-                    return matched;
-                })
-
-            }
-        }, self);
-    }
-
-
-    //////////////////////////////////////////////////_____AJAX REQUEST_____///////////////////////////////////////////////////////
-
-    var fourSquareRequest = function(marker, largeInfowindow) {
-        $.ajax({
+		 self.populateInfoWindow = function(marker, infowindow) {
+			  $.ajax({
+			type: "GET",
             url: 'https://api.foursquare.com/v2/venues/explore',
             dataType: 'json',
             data: {
                 client_id: "ABPY10SRGGISL4NVHQ01HY3M3S3BZP3AK2AKNUX4DMPR41YT",
                 client_secret: "1NLYD3DVGFIRZBCLXHK0G0V0EYZA1EHHOQVAOQFVEMB5VFSC",
                 v: '20180214',
-                ll: `${restaurants[i].coordinates.lat},${restaurants[i].coordinates.lng}`,
-                query: restaurants[i].name
+                ll: `${marker.mLat},${marker.mLng}`,
+                query: marker.name
             },
             success: function(data) {
                 console.log(data);
-                var rating = data.response.venue.rating;
+                var rating = data.response.groups[0].venue.rating;
                 var url = data.response.venue.url;
                 /*The infowindow is udpdated with the FourSquare api data and the infowindow is opened immediately afterwards*/
                 // Check to make sure the infowindow is not already opened on this marker.
@@ -276,8 +254,49 @@ $(document).ready(function() {
                 alert("Error, Four Square api data could not display")
             }
         });
-    };
+		 }
+		  
+        //list the marker filtered in the listview
+        self.listedRestaurants = function(marker) {
+                google.maps.event.trigger(marker, 'click');
+				
+            }
+            //function to filter  markers based on written input
+        self.filteredRestaurants = ko.computed(function() {
+            //lowercase the input and store it in filter
+            var filter = self.writtenInput().toLowerCase();
+            //check if the written input matches any of the locations in the locations array,if doesnt match all markers stay visible on map
+            if (!filter) {
+                self.locations().forEach(function(item) {
+                    
+                    item.setVisible(true);
+                });
+                return self.locations();
+                //if the written input matches a marker in the oc arr then the input id handled by the ArrFilter method
+            } else {
+                //call the arrFilter method and pass the loc.arr as an argument
+                return ko.utils.arrayFilter(self.locations(), function(item) {
+                    /*store the matched locations lowercased in matched variable and making sure that it is greater than or equal 0*/
+                    var matched = item.name.toLowerCase().indexOf(filter) >= 0;
+                    item.setVisible(matched);
+					 if(item.name){
+                item.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(function() {
+                    item.setAnimation(null);
+                }, 1500);
+					 }
+                    return matched;
+                })
+				
+					
+
+            }
+			
+        }, self);
+		
+    }
 
 
+   
 
 });

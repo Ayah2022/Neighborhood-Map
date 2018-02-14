@@ -77,8 +77,15 @@
     /* background-color: #FC892F !important;
     */
 }
- li>a {
+ li>a:hover {
      color: #FC892F !important;
+	 background-color: #96D37D;
+}
+#items:hover {
+	background-color: #96D37D;
+	cursor: pointer;
+	display:inline-block !important;
+	text-align:center !important;
 }
  .dropdown-menu {
      border: 1px solid #96D37D ;

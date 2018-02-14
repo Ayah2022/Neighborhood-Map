@@ -32,7 +32,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="collapsable-nav">
 
-                        <form class="navbar-form navbar-left col-lg-3 col-m-3 col-sm-3" autocomplete="on">
+                        <form class="navbar-form navbar-left col-lg-3 col-m-3 col-sm-3" data-bind="submit: $root.clickEventHandlerFunction" autocomplete="on">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="name_input" list="neighborhoods_list" data-bind="textInput: writtenInput" placeholder="Search">
                                 <datalist id="neighborhoods_list" data-bind="foreach: filteredRestaurants">
@@ -41,13 +41,13 @@
   
 </datalist>
                             </div>
-                            <button type="submit" class="btn btn-default">Search</button>
+                        <button type="submit" class="btn btn-default">Search</button>
                         </form>
                         <ul class="nav navbar-nav col-lg-3 col-m-3 col-sm-3">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Get a certain Restaurant <span class="caret"></span></a>
                                 <ul class="dropdown-menu" data-bind="foreach: filteredRestaurants">
-                                    <li data-bind="text: name, click: $root.listedRestaurants">
+                                    <li id="items" data-bind="text: name, click: $root.listedRestaurants,click: $root.clickEventHandlerFunction">
                                         <li role="separator" class="divider"></li>
 
                                 </ul>
