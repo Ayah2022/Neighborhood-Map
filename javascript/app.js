@@ -209,6 +209,7 @@ $(document).ready(function() {
                 // Create an click listener to open the large infowindow at each marker.
                 // populates the infowindow when the marker is clicked.
                 self.clickEventHandlerFunction = function(marker){
+					console.log(marker);
             if(marker.name){
                 marker.setAnimation(google.maps.Animation.BOUNCE);
                 setTimeout(function() {
@@ -234,8 +235,11 @@ $(document).ready(function() {
             },
             success: function(data) {
                 console.log(data);
-                var rating = data.response.groups[0].venue.rating;
-                var url = data.response.venue.url;
+				var name=data.response.groups[0].items[0].venue.name;
+                var rating = data.response.groups[0].items[0].venue.rating.text;
+				console.log(rating);
+                var url = data.response.groups[0].items[0].venue.url.text;
+				var menu = data.response.groups[0].items[0].venue.menu.text;
                 /*The infowindow is udpdated with the FourSquare api data and the infowindow is opened immediately afterwards*/
                 // Check to make sure the infowindow is not already opened on this marker.
                 if (infowindow.marker != marker) {
