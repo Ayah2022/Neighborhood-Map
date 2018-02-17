@@ -25,17 +25,17 @@ var bounds = new google.maps.LatLngBounds();
 
 			
 	//Iterate over the restarants and create a marker for each one
-            for (var i = 0; i < restaurants.length; i++) {
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(restaurants[i].coordinates),
-                    animation: google.maps.Animation.DROP,
-                    map: map,
-                    icon: defaultIcon,
-                    name: restaurants[i].name,
-					mLat: restaurants[i].coordinates.lat,
-					mLng: restaurants[i].coordinates.lng
+             restaurants.forEach(function(restaurant) {
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(restaurant.coordinates),
+            animation: google.maps.Animation.DROP,
+            map: map,
+            icon: defaultIcon,
+            name: restaurant.name,
+            mLat: restaurant.coordinates.lat,
+            mLng: restaurant.coordinates.lng
 
-                });	
+        });
  //put the markers
                 markers.push(marker);
                 // Two event listeners - one for mouseover, one for mouseout,
@@ -67,7 +67,7 @@ var bounds = new google.maps.LatLngBounds();
             }
             map.fitBounds(bounds);
 	   
- }
+  });
  function makeMarkerIcon(markerColor) {
         var markerImage = new google.maps.MarkerImage(
             'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor +
