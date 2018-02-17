@@ -58,10 +58,10 @@ var bounds = new google.maps.LatLngBounds();
                     currentMarker.setAnimation(null);
                 }, 1500);
 				}
-           }
+           };
        })(marker));	
  // Extend the boundaries of the map for each marker and display the marker
-            for (var i = 0; i < markers.length; i++) {
+            for ( i = 0; i < markers.length; i++) {
                 markers[i].setMap(map);
                 bounds.extend(markers[i].position);
             }
