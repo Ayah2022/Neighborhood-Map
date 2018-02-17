@@ -7,71 +7,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <!--<link rel="stylesheet" type="text/css" media="screen and (min-width: 767px) and (max-width: 820px)" href="css/style.css" />-->
-    <link href="https://fonts.googleapis.com/css?family=Lora|Oxygen" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet" type="text/css">
 
 
 </head>
 
 <body>
     <div class="container-fluid">
-        <header>
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header col-lg-3 col-m-3 col-sm-3">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsable-nav" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-                        <h1 class="navbar-brand ">Find Your Restaurant</h1>
-                    </div>
 
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="collapsable-nav">
-
-                        <form class="navbar-form navbar-left col-lg-3 col-m-3 col-sm-3" data-bind="submit: $root.clickEventHandlerFunction" autocomplete="on">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="name_input" list="neighborhoods_list" data-bind="textInput: writtenInput" placeholder="Search">
-                                <datalist id="neighborhoods_list" data-bind="foreach: filteredRestaurants">
-  <option data-bind="text: name">
-
-  
-</datalist>
-                            </div>
-                        <button type="submit" class="btn btn-default">Search</button>
-                        </form>
-                        <ul class="nav navbar-nav col-lg-3 col-m-3 col-sm-3">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Get a certain Restaurant <span class="caret"></span></a>
-                                <ul class="dropdown-menu" data-bind="foreach: filteredRestaurants">
-                                    <li id="items" data-bind="text: name, click: $root.listedRestaurants,click: $root.clickEventHandlerFunction"></li>
-                                        <li role="separator" class="divider"></li>
-
-                                </ul>
-                                </li>
-                        </ul>
-                    </div>
-                    <!-- /.navbar-collapse -->
+        <div id="options-box" class="col-lg-3 col-md-3 col-sm-3">
+            <h1>Find Your Restaurant</h1>
+            <div>
+                <br>
+                <div align="center">
+                    <input id="inputValue" list="restaurants_list" autocomplete="on" type="text" placeholder="Search" data-bind=" textInput: restaurantInput">
+                    <datalist id="restaurants_list" data-bind="foreach: filteredRest">
+                    <option data-bind="text: name, click: $root.listedRest">                   
+				
                 </div>
-                <!-- /.container-fluid -->
-            </nav>
-        </header>
-        <div id="map"></div>
+				<br>
+                <div align="center">
+                     <ul data-bind="foreach: filteredRest">
+           <li data-bind="text: name, click: $root.listedRest"></li>
+         </ul>
+                </div>
+        </div>
+      </div>
+<div>
+  <div id="map" class="col-lg-9 col-md-9 col-sm-9"></div>
     </div>
+	</div>
+	 <script src="js/jquery-2.1.4.min.js"></script>
+    <script src='js/knockout-3.4.2.js'></script>
+    <script src="js/bootstrap.min.js"></script>
+   <!-- <script src="js/ajax-utils.js"></script>-->
+    <script async defer onerror="HandleError()" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARzwITH9gyD4Us8IX6IO5DbPUxTO9_7lc&v=3&callback=initMap"></script>
 
-
-    <script src="javascript/jquery-2.1.4.min.js"></script>
-    <script src='javascript/knockout-3.4.2.js'></script>
-    <script src="javascript/bootstrap.min.js"></script>
-    <script src="javascript/ajax-utils.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARzwITH9gyD4Us8IX6IO5DbPUxTO9_7lc&v=3&callback=initMap"></script>
-
-    <script src="javascript/app.js" type="text/javascript"></script>
-
-
+    <script src="js/data.js" type="text/javascript"></script>
+	<script src="js/model.js" type="text/javascript"></script>
+	    <script src="js/foursquareInfo.js" type="text/javascript"></script>
+	<script src="js/app.js" type="text/javascript"></script>
 </body>
-
 </html>
