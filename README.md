@@ -43,9 +43,9 @@ This project consists the following files and directories:
 
 * `README.md` - This read me file.
 
-* `app.js` - Javascript file that contains the Google Maps API,Foursquare API and Knockout JS code.
+* `app.js`,`model.js`,`data.js` and `foursquareInfo` - Javascript files that contain data, Google Maps API,Foursquare API and Knockout JS code.
 * `bootstrap.min` - Bootstrap framework to apply some responsive design.
-* `ajax-utils`, `jquery-2.1.4.min` and `knockout-3.4.2` for somw binding methods and access.
+* `jquery-2.1.4.min` and `knockout-3.4.2` for somw binding methods and access.
 
 ## Give a look if you want =')
 - https://ayah2022.github.io/Neighborhood-Map/
