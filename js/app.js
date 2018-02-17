@@ -25,7 +25,7 @@ var bounds = new google.maps.LatLngBounds();
 
 			
 	//Iterate over the restarants and create a marker for each one
-            for (i = 0; i < restaurants.length; i++) {
+            for (var i = 0; i < restaurants.length; i++) {
                 marker = new google.maps.Marker({
                     position: new google.maps.LatLng(restaurants[i].coordinates),
                     animation: google.maps.Animation.DROP,
