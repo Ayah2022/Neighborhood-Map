@@ -13,15 +13,19 @@ var getMarkerInfo = function(marker) {
         },
         success: function(data) {
             console.log(data);
+			var anchorUrl;
             var name = data.response.groups[0].items[0].venue.name;
             var rating = data.response.groups[0].items[0].venue.rating;
             var url = data.response.groups[0].items[0].venue.url;
             if (typeof(url) == "undefined") {
-                url = "The foursquare API has no URL for this restaurant";
+                anchorUrl = "The foursquare API has no URL for this restaurant";
             }
+			else{
+				anchorUrl='<a href='+url+'>'+url+'</a>';
+			}
             if (infowindow.marker != marker) {
                 infowindow.marker = marker;
-                infowindow.setContent('<div>' + '<h4>' + name + '</h4>' + '<h5>Rating: </h5><h5>' + rating + '</h5>' + '<h5>' + '<a href=' + url + '>' + url + '</a></h5>' + '</div>');
+                infowindow.setContent('<div>' + '<h4>' + name + '</h4>' + '<h5>Rating: </h5><h5>' + rating + '</h5>' + '<h5>' + anchorUrl + '</h5>' + '</div>');
                 infowindow.open(map, marker);
                 // Make sure the marker property is cleared if the infowindow is closed.
                 infowindow.addListener('closeclick', function() {

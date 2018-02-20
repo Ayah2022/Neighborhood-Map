@@ -49,3 +49,10 @@ This project consists the following files and directories:
 
 ## Give a look if you want =')
 - https://ayah2022.github.io/Neighborhood-Map/
+
+## IF you want to setup and run the app locally :
+1- Download or clone the zip to a directory you'll be working in.
+2- Unzip the file.
+3- Open the index.html in chrome browser.
+4- Click markers or list items to select a location and retrieve info about it.
+5- Type into the filter/search box to filter the shown locations.

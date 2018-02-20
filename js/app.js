@@ -83,6 +83,6 @@ function initMap() {
 
 }
 
-function HandleError() {
+function handleError() {
     alert('Invalid Map');
 }
