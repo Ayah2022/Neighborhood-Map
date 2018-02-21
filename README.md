@@ -3,7 +3,7 @@
 ## About
 
 
-This is the fifth project for the Udacity Full Stack Nanodegree.
+This is the eighth project for the Udacity Full Stack Nanodegree.
 The Neighborhood Map project involves developing a single page
 application with the KnockoutJS framework and various API's. 
 Aside from the Google Maps API, additional information is added
